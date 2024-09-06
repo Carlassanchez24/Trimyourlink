@@ -3,9 +3,7 @@ import Layout1 from '@/layout/Layout1';
 import Welcome from '@/pages/Welcome';
 import Login from '@/pages/Login';
 import SignUp from '@/pages/SignUp';
-import Inspireme from '@/pages/Inspireme';
 import TravelFilter from '@/pages/TravelFilter';
-import Home from '@/pages/Home';
 import Account from '@/pages/Account';
 import EditProfile from '@/components/ComponentsAccounts/EditProfile';
 import AccountStart from '@/components/ComponentsAccounts/AccountStart';
@@ -18,7 +16,7 @@ const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <Home />,
+                element: <Welcome />,
             },
             {
                 path: 'welcome',
@@ -37,14 +35,6 @@ const router = createBrowserRouter([
                 element: (
                     <PrivateRoute>
                         <Account />
-                    </PrivateRoute>
-                ),
-            },
-            {
-                path: 'inspireme',
-                element: (
-                    <PrivateRoute>
-                        <Inspireme />
                     </PrivateRoute>
                 ),
             },
@@ -70,7 +60,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '*',
-                element: <Home />,  // Si alguien intenta acceder a una ruta inexistente, lo redirige a Home
+                element: <Welcome />,  // Si alguien intenta acceder a una ruta inexistente, lo redirige a Home
             },
         ],
     },
