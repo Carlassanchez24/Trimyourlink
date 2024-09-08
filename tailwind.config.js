@@ -16,13 +16,13 @@ export default {
       },
     },
     extend: {
-      // Nueva paleta de colores (Lila)
       colors: {
-        primaryLila: '#6D28D9',     // Lila oscuro
-        secondaryLila: '#8B5CF6',   // Lila medio
-        accentLila: '#D8B4FE',      // Lila claro
-        backgroundLila: '#F3E5F5',  // Lila muy claro
-        neutralWhite: '#EDE9FE',    // Blanco lila
+        primaryBlue: '#3872B1',    // Azul primario
+        secondaryBlue: '#416286',  // Azul secundario
+        accentBlue: '#207ADB',     // Azul de acento
+        darkGrayBlue: '#3C4B5C',   // Gris azulado oscuro
+        darkGray: '#2A2E33',       // Gris oscuro
+        neutralWhite: '#EDE9FE',   // Blanco lila (previamente definido)
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -57,7 +57,6 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
       },
-      // Nuevas fuentes
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],
         lora: ['Lora', 'serif'],

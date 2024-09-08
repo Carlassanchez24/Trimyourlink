@@ -48,10 +48,10 @@ function Login() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="relative flex flex-col justify-start pb-40">
-        <h2 className="mt-2 mb-40 text-2xl font-bold text-left">Log in</h2>
-        <div className="relative mb-1">
+    <div className="flex items-center justify-center min-h-screen bg-darkGrayBlue">
+      <div className="relative flex flex-col justify-start p-8  rounded-lg max-w-md w-full">
+        <h2 className="mt-2 mb-6 text-2xl font-bold text-left text-primaryBlue">Log in</h2>
+        <div className="relative mb-4">
           {error && <p className="mb-4 text-center text-red-500">{error}</p>}
           {message && <p className="mb-4 text-center text-green-500">{message}</p>}
           <form onSubmit={handleLogin}>
@@ -61,16 +61,16 @@ function Login() {
                 placeholder="Mail"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2 border rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                className="w-full px-4 py-2 border border-gray-300 rounded-full shadow-md text-darkGrayBlue focus:outline-none focus:ring-2 focus:ring-primaryBlue"
               />
             </div>
-            <div className="relative mb-8">
+            <div className="relative mb-6">
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2 border rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                className="w-full px-4 py-2 border border-gray-300 rounded-full shadow-md text-darkGrayBlue focus:outline-none focus:ring-2 focus:ring-primaryBlue"
               />
               <button
                 type="button"
@@ -78,23 +78,23 @@ function Login() {
                 className="absolute inset-y-0 right-0 flex items-center pr-3"
                 aria-label={showPassword ? "Hide password" : "Show password"}
               >
-                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} className="text-accentBlue" />
               </button>
             </div>
             <div className="mb-4 text-right">
-              <a href="#" className="text-sm text-gray-600 hover:text-blue-600">
+              <a href="#" className="text-sm text-primaryBlue hover:text-accentBlue">
                 Forgot your password?
               </a>
             </div>
             <Button
               type="submit"
-              className="font-semibold text-white transition-colors rounded-full hover:bg-blue-700"
+              className="w-full py-2 mb-4 bg-primaryBlue text-secondaryWhite font-poppins transition-colors rounded-full hover:bg-accentBlue"
             >
               Log in
             </Button>
-            <div className="w-[334px] mb-4 text-center mt-6 text-sm text-gray-600">
+            <div className="text-center text-sm text-primaryBlue mt-6">
               Don&apos;t have an account yet?{" "}
-              <Link to="/SignUp" className="text-blue-600 hover:underline">
+              <Link to="/SignUp" className="text-accentBlue hover:underline">
                 Sign up
               </Link>
             </div>
