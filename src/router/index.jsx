@@ -3,11 +3,11 @@ import Layout1 from '@/layout/Layout1';
 import Welcome from '@/pages/Welcome';
 import Login from '@/pages/Login';
 import SignUp from '@/pages/SignUp';
-import TravelFilter from '@/pages/TravelFilter';
 import Account from '@/pages/Account';
 import EditProfile from '@/components/ComponentsAccounts/EditProfile';
 import AccountStart from '@/components/ComponentsAccounts/AccountStart';
 import PrivateRoute from '@/components/PrivateRoute';
+import UserURLs from '@/pages/User';
 
 const router = createBrowserRouter([
     {
@@ -39,8 +39,12 @@ const router = createBrowserRouter([
                 ),
             },
             {
-                path: 'travelfilter',
-                element: <TravelFilter />,
+                path: 'user/urls',
+                element: (
+                    <PrivateRoute>
+                        <UserURLs />
+                    </PrivateRoute>
+                ),
             },
             {
                 path: 'editProfile',

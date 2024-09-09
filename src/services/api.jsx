@@ -2,6 +2,10 @@ import axios from "axios";
 
 const API_URL = 'http://127.0.0.1:8000/api/users';
 
+const URL_API_URL = 'http://127.0.0.1:8000/api/urls';
+
+
+
 const apiClient = axios.create({
     baseURL: API_URL,
     headers: {
@@ -35,5 +39,34 @@ export const registerUser = async (username, email, password) => {
         } else {
             return { success: false, error: 'An unexpected error occurred. Please try again.' };
         }
+    }
+};
+
+
+export const getUserUrls = async (accessToken) => {
+    try {
+        const response = await axios.get(`${URL_API_URL}/`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`, 
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching user URLs:", error.response?.data || error.message);
+        throw new Error(error.response?.data?.error || 'Failed to fetch URLs');
+    }
+};
+
+export const deleteUserUrl = async (id, accessToken) => {
+    try {
+        const response = await axios.delete(`${URL_API_URL}/${id}/`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`, 
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error deleting URL:", error.response?.data || error.message);
+        throw new Error(error.response?.data?.error || 'Failed to delete URL');
     }
 };

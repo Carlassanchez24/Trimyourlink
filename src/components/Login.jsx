@@ -40,7 +40,7 @@ function Login() {
 
       setMessage('User logged in successfully');
       console.log(result);
-      navigate('/Inspireme');
+      navigate('/User');
     } catch (error) {
       setError('An error occurred during login');
       console.error(error);
