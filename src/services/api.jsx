@@ -15,7 +15,7 @@ const apiClient = axios.create({
 
 export const loginUser = async (email, password) => {
     try {
-        const response = await axios.post(`${API_URL}/login/`, {
+        const response = await apiClient.post('/login/', {
             email,
             password
         });
