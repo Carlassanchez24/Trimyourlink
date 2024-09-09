@@ -48,9 +48,9 @@ function Login() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-darkGrayBlue">
+    <div className="flex items-center justify-center min-h-screen bg-customgray ">
       <div className="relative flex flex-col justify-start p-8  rounded-lg max-w-md w-full">
-        <h2 className="mt-2 mb-6 text-2xl font-bold text-left text-primaryBlue">Log in</h2>
+        <h2 className="mt-2 mb-12 text-2xl font-bold text-center text-primaryBlue">Log in</h2>
         <div className="relative mb-4">
           {error && <p className="mb-4 text-center text-red-500">{error}</p>}
           {message && <p className="mb-4 text-center text-green-500">{message}</p>}
@@ -88,7 +88,7 @@ function Login() {
             </div>
             <Button
               type="submit"
-              className="w-full py-2 mb-4 bg-primaryBlue text-secondaryWhite font-poppins transition-colors rounded-full hover:bg-accentBlue"
+              className="w-full py-2 mb-4 bg-primaryBlue text-white font-poppins transition-colors rounded-full hover:bg-accentBlue"
             >
               Log in
             </Button>
