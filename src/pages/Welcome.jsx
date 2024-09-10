@@ -15,10 +15,12 @@ const Page1 = () => {
     }
 
     try {
+      const token = localStorage.getItem('token');  
       const response = await fetch('http://localhost:8000/api/shorten/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,  
         },
         body: JSON.stringify({ url }),
       });

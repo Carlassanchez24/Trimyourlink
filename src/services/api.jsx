@@ -1,54 +1,50 @@
-import axios from "axios";
+import axios from 'axios';
 
-const API_URL = 'http://127.0.0.1:8000/api/users';
-
-const URL_API_URL = 'http://127.0.0.1:8000/api/urls';
-
+const USER_API_URL = 'http://127.0.0.1:8000/api/users';
+const URL_API_URL = 'http://127.0.0.1:8000/api/my-urls';
 
 
-const apiClient = axios.create({
-    baseURL: API_URL,
+const userApiClient = axios.create({
+    baseURL: USER_API_URL,
     headers: {
         'Content-Type': 'application/json',
     },
 });
 
+const urlApiClient = axios.create({
+    baseURL: URL_API_URL,
+    headers: {
+        'Content-Type': 'application/json',
+    },
+});
+
+
+
 export const loginUser = async (email, password) => {
     try {
-        const response = await apiClient.post('/login/', {
-            email,
-            password
-        });
+        const response = await userApiClient.post('/login/', { email, password });
+
         return response.data;
     } catch (error) {
-        throw new Error(error.response?.data?.error || 'An error occurred');
+        console.error('Login Error:', error.response?.data || error.message);
+        throw new Error(error.response?.data?.error || 'An error occurred during login');
     }
 };
 
 export const registerUser = async (username, email, password) => {
     try {
-        const response = await apiClient.post('/register/', { username, email, password });
+        const response = await userApiClient.post('/register/', { username, email, password });
         return { success: true, data: response.data };
     } catch (error) {
         console.error("Error in registerUser:", error.response?.data || error.message);
-
-        if (error.response) {
-            return { success: false, error: error.response.data };
-        } else if (error.request) {
-            return { success: false, error: 'Network error. Please try again later.' };
-        } else {
-            return { success: false, error: 'An unexpected error occurred. Please try again.' };
-        }
+        return { success: false, error: error.response?.data || 'An unexpected error occurred. Please try again.' };
     }
 };
 
-
-export const getUserUrls = async (accessToken) => {
+export const getUserUrls = async () => {
     try {
-        const response = await axios.get(`${URL_API_URL}/`, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`, 
-            },
+        const response = await urlApiClient.get('/', {
+            credentials: 'include', 
         });
         return response.data;
     } catch (error) {
@@ -57,12 +53,10 @@ export const getUserUrls = async (accessToken) => {
     }
 };
 
-export const deleteUserUrl = async (id, accessToken) => {
+export const deleteUserUrl = async (id) => {
     try {
-        const response = await axios.delete(`${URL_API_URL}/${id}/`, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`, 
-            },
+        const response = await urlApiClient.delete(`/${id}/`, {
+            credentials: 'include', 
         });
         return response.data;
     } catch (error) {

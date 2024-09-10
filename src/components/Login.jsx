@@ -11,8 +11,8 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   const validateEmail = (email) => {
@@ -22,6 +22,7 @@ function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
     if (!passwordRegex.test(password)) {
       setError('Password or login empty.');
       return;
@@ -33,14 +34,13 @@ function Login() {
 
     try {
       const result = await loginUser(email, password);
-      const { token, user } = result;
-      
-      localStorage.setItem('token', token);
-      localStorage.setItem('userData', JSON.stringify(user));
+      const { access } = result;
+
+      localStorage.setItem('accessToken', access);
 
       setMessage('User logged in successfully');
       console.log(result);
-      navigate('/User');
+      navigate('/user/urls');
     } catch (error) {
       setError('An error occurred during login');
       console.error(error);
@@ -49,7 +49,7 @@ function Login() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-customgray ">
-      <div className="relative flex flex-col justify-start p-8  rounded-lg max-w-md w-full">
+      <div className="relative flex flex-col justify-start p-8 rounded-lg max-w-md w-full">
         <h2 className="mt-2 mb-12 text-2xl font-bold text-center text-primaryBlue">Log in</h2>
         <div className="relative mb-4">
           {error && <p className="mb-4 text-center text-red-500">{error}</p>}

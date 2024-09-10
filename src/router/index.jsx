@@ -32,18 +32,12 @@ const router = createBrowserRouter([
             },
             {
                 path: 'account',
-                element: (
-                    <PrivateRoute>
-                        <Account />
-                    </PrivateRoute>
-                ),
+                element: <Account />,
             },
             {
                 path: 'user/urls',
-                element: (
-                    <PrivateRoute>
+                element: (                    
                         <UserURLs />
-                    </PrivateRoute>
                 ),
             },
             {
@@ -61,10 +55,6 @@ const router = createBrowserRouter([
                         <AccountStart />
                     </PrivateRoute>
                 ),
-            },
-            {
-                path: '*',
-                element: <Welcome />,  // Si alguien intenta acceder a una ruta inexistente, lo redirige a Home
             },
         ],
     },

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import Button from "./ui/Button";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,7 +13,7 @@ function SignUp() {
   const [userName, setUserName] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleLogin = async (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
 
     if (!userName || !email || !password) {
@@ -44,19 +43,19 @@ function SignUp() {
       setEmail('');
       setPassword('');
       setUserName('');
-      navigate("/Inspireme");
+      navigate("/Login");
     } catch (error) {
       setError('Registration failed. Please try again.');
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-customgray ">
+    <div className="min-h-screen flex items-center justify-center bg-customgray">
       <div className="relative flex flex-col justify-start p-8 rounded-lg max-w-md w-full">
         <h2 className="text-2xl font-bold text-center mb-12 text-primaryBlue">Sign up</h2>
         <div className="relative mb-1">
           {error && <p className="text-red-500 text-center mb-4">{error}</p>}
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleSignUp}>
             <div className="mb-4">
               <input
                 type="text"
