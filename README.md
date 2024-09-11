@@ -1,4 +1,4 @@
-# Travel Buddy 🧳✈️
+# Trim your link :scissors::scissors::scissors:
 
 ## Index 📝
 
@@ -17,7 +17,7 @@
 <br>
 
 ## Description 💡
-Travel Buddy is a travel planner app that provides recommendations of tourist attractions to its registered users. The goal of this development is to enable users to find uselful information about weather and tourist attractions before travelling to a certain destination. Take a look at our app here https://travel-buddy-f5.netlify.app/
+This project implements a URL shortener service with user authentication and management features. The application allows users to shorten URLs and provides additional functionality for registered users to view and manage their shortened URLs.
 
 <br>
 
@@ -159,31 +159,17 @@ Naming of directories and files following the scheme below:
 ```
 <br>
 
-## Developers 👩‍💻
+## Developer 👩‍💻
 
-<p> <a href="https://github.com/jess-ar">
-    <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white"> **Jess Arroyo**</a></p>
-    
-<p> <a href="https://github.com/pilimuino">
-    <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white"> **Pili Muiño**</a></p>
 
 <p> <a href="https://github.com/Carlassanchez24">
     <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white"> **Carla Sánchez**</a></p>
     
-<p> <a href="https://github.com/evymari">
-    <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white"> **Evelyn Quevedo**</a></p>
-    
-<p> <a href="https://github.com/loren-2">
-    <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white"> **Lorena**</a></p>
 
-<br>
 
 ## Screenshots 📸
 
-![HOME](https://i.ibb.co/J7bVZt1/HOME.jpg)
-![WELCOME](https://i.ibb.co/VgdzWKL/WELCOME.png)
-![LOGIN](https://i.ibb.co/hgGg5jP/LOGIN.png)
-![SIGNUP](https://i.ibb.co/QdRJ9Jr/SIGN-UP.png)
+
 
 
 
