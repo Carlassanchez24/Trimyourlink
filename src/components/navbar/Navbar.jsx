@@ -5,7 +5,7 @@ const Navbar = () => {
     return (
         <nav className="fixed bottom-0 left-0 w-full bg-backgroundLila shadow-lg border-t-4 border-secondaryLila" aria-label="Main Navigation">
             <ul className="flex justify-around py-2">
-                <li className="flex flex-colitems-center group">
+                <li className="flex flex-col items-center group">
                     <NavLink 
                         to="/" 
                         className={({ isActive }) => 
