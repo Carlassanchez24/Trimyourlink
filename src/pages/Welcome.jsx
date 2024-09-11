@@ -10,9 +10,22 @@ const Page1 = () => {
   const [userUrls, setUserUrls] = useState([]);
   const [authToken, setAuthToken] = useState(localStorage.getItem('authToken') || '');
 
+  useEffect(() => {
+    if (authToken) {
+      fetchUserUrls();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authToken]);
+
   const handleShorten = async () => {
     if (!url) {
       setError('Please enter a valid URL');
+      return;
+    }
+
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) {
+      setError('You must be logged in to shorten a URL.');
       return;
     }
 
@@ -21,33 +34,38 @@ const Page1 = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': authToken ? `Bearer ${authToken}` : undefined,
+          'Authorization': `Bearer ${accessToken}`,  
         },
         body: JSON.stringify({ url }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to shorten URL');
+        const errorData = await response.json();
+        console.log('Error response from server:', errorData);
+        throw new Error(errorData.detail || 'Failed to shorten URL');
       }
 
       const data = await response.json();
-      setShortenedUrl(data.shortened_url);
+      console.log('URL shortened successfully:', data);
+      setShortenedUrl(data.shortened_url);  // Aquí guardamos la URL correctamente
       setError('');
     } catch (error) {
-      setError('An error occurred while shortening the URL');
-      console.error(error);
+      console.error('Error during URL shortening:', error);
+      setError('An error occurred while shortening the URL.');
     }
   };
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(shortenedUrl)
-      .then(() => {
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      })
-      .catch((error) => {
-        console.error('Failed to copy:', error);
-      });
+    if (shortenedUrl) {
+      navigator.clipboard.writeText(shortenedUrl)
+        .then(() => {
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2000);
+        })
+        .catch((error) => {
+          console.error('Failed to copy:', error);
+        });
+    }
   };
 
   const fetchUserUrls = async () => {
@@ -62,19 +80,17 @@ const Page1 = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to fetch user URLs');
+        const errorData = await response.json();
+        throw new Error(errorData.detail || 'Failed to fetch user URLs');
       }
 
       const data = await response.json();
       setUserUrls(data);
     } catch (error) {
       console.error('Error fetching user URLs:', error);
+      setError(`Failed to fetch user URLs: ${error.message}`);
     }
   };
-
-  useEffect(() => {
-    fetchUserUrls();
-  }, [authToken]);
 
   return (
     <div className="flex min-h-screen relative flex-col items-center p-4 bg-customgray">
@@ -87,6 +103,7 @@ const Page1 = () => {
           make your life easy
         </p>
       </div>
+
       <div className="flex flex-col items-center w-full max-w-md">
         <input
           type="text"
@@ -101,7 +118,9 @@ const Page1 = () => {
         >
           Shorten URL
         </Button>
+
         {error && <p className="text-red-500">{error}</p>}
+
         {shortenedUrl && (
           <div className="w-full mt-4 p-3 text-white bg-secondaryBlue rounded-md shadow-md flex items-center justify-between">
             <div>
@@ -116,7 +135,7 @@ const Page1 = () => {
               </a>
             </div>
             <button
-              onClick={copyToClipboard}
+              onClick={copyToClipboard}  // Elimina el paso del argumento, ya que se usa shortenedUrl directamente
               className="ml-4 p-2 bg-darkGray text-secondaryWhite rounded-md shadow-md hover:bg-darkGrayBlue transition-colors"
               aria-label="Copy URL to clipboard"
             >
@@ -125,6 +144,7 @@ const Page1 = () => {
             </button>
           </div>
         )}
+
         {/* Mostrar URLs del usuario si están disponibles */}
         {userUrls.length > 0 && (
           <div className="mt-6 w-full max-w-md">
