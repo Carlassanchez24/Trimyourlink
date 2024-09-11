@@ -8,7 +8,6 @@ const Page1 = () => {
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState('');
   const [userUrls, setUserUrls] = useState([]);
-  // eslint-disable-next-line no-unused-vars
   const [authToken, setAuthToken] = useState(localStorage.getItem('authToken') || '');
 
   useEffect(() => {
@@ -23,15 +22,13 @@ const Page1 = () => {
       setError('Please enter a valid URL');
       return;
     }
-  
-    // Obtener el token de autenticación del localStorage
+
     const accessToken = localStorage.getItem('accessToken');
-  
     if (!accessToken) {
       setError('You must be logged in to shorten a URL.');
       return;
     }
-  
+
     try {
       const response = await fetch('http://localhost:8000/api/shorten/', {
         method: 'POST',
@@ -39,35 +36,36 @@ const Page1 = () => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${accessToken}`,  
         },
-        body: JSON.stringify({ url }),  
+        body: JSON.stringify({ url }),
       });
-  
+
       if (!response.ok) {
         const errorData = await response.json();
         console.log('Error response from server:', errorData);
         throw new Error(errorData.detail || 'Failed to shorten URL');
       }
-  
+
       const data = await response.json();
       console.log('URL shortened successfully:', data);
-      setShortenedUrl(data.shortened_url);  
+      setShortenedUrl(data.shortened_url);  // Aquí guardamos la URL correctamente
       setError('');
     } catch (error) {
       console.error('Error during URL shortening:', error);
       setError('An error occurred while shortening the URL.');
     }
   };
-  
 
-  const copyToClipboard = (urlToCopy) => {
-    navigator.clipboard.writeText(urlToCopy)
-      .then(() => {
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      })
-      .catch((error) => {
-        console.error('Failed to copy:', error);
-      });
+  const copyToClipboard = () => {
+    if (shortenedUrl) {
+      navigator.clipboard.writeText(shortenedUrl)
+        .then(() => {
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2000);
+        })
+        .catch((error) => {
+          console.error('Failed to copy:', error);
+        });
+    }
   };
 
   const fetchUserUrls = async () => {
@@ -93,6 +91,7 @@ const Page1 = () => {
       setError(`Failed to fetch user URLs: ${error.message}`);
     }
   };
+
   return (
     <div className="flex min-h-screen relative flex-col items-center p-4 bg-customgray">
       <div className="relative flex flex-col items-center mt-20 mb-5 pt-10">
@@ -136,7 +135,7 @@ const Page1 = () => {
               </a>
             </div>
             <button
-              onClick={copyToClipboard}
+              onClick={copyToClipboard}  // Elimina el paso del argumento, ya que se usa shortenedUrl directamente
               className="ml-4 p-2 bg-darkGray text-secondaryWhite rounded-md shadow-md hover:bg-darkGrayBlue transition-colors"
               aria-label="Copy URL to clipboard"
             >
