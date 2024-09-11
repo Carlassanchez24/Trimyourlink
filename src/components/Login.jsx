@@ -24,7 +24,7 @@ function Login() {
     e.preventDefault();
 
     if (!passwordRegex.test(password)) {
-      setError('Password or login empty.');
+      setError('Password or login empty or wrong.');
       return;
     }
     if (!validateEmail(email)) {
