@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
-import { getUserUrls, deleteUserUrl } from "@/services/api";
+import { getUserUrls } from "@/services/api";
 import { useNavigate } from 'react-router-dom';
 import Button from "@/components/ui/Button";
 
@@ -37,15 +37,27 @@ function UserURLs() {
 
   const handleDelete = async (id) => {
     try {
-      const accessToken = localStorage.getItem('accessToken');  // Obtén el token aquí
-
+      const accessToken = localStorage.getItem('accessToken');
       if (!accessToken) {
         setError("No access token found. Please log in.");
         return;
       }
-
-      await deleteUserUrl(id, accessToken);
-      setUrls(urls.filter(url => url.id !== id)); 
+  
+      const response = await fetch(`http://localhost:8000/api/urls/${id}/delete/`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (response.ok) {
+        // Actualiza el estado para eliminar la URL de la lista
+        setUrls(urls.filter(url => url.id !== id));
+      } else {
+        const errorData = await response.json();
+        setError(`Failed to delete URL: ${errorData.detail}`);
+      }
     } catch (error) {
       setError("Failed to delete URL. Please try again.");
     }
