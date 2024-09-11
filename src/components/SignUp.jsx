@@ -1,8 +1,9 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import Button from "./ui/Button";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { loginUser } from "@/services/api";
+import { registerUser } from "@/services/api";
 import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
@@ -38,7 +39,7 @@ function SignUp() {
     }
 
     try {
-      await loginUser(userName, email, password);
+      await registerUser(userName, email, password);
       setError('');
       setEmail('');
       setPassword('');
@@ -50,9 +51,9 @@ function SignUp() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-darkGrayBlue">
+    <div className="min-h-screen flex items-center justify-center bg-customgray ">
       <div className="relative flex flex-col justify-start p-8 rounded-lg max-w-md w-full">
-        <h2 className="text-2xl font-bold text-left mb-12 text-primaryBlue">Sign up</h2>
+        <h2 className="text-2xl font-bold text-center mb-12 text-primaryBlue">Sign up</h2>
         <div className="relative mb-1">
           {error && <p className="text-red-500 text-center mb-4">{error}</p>}
           <form onSubmit={handleLogin}>
@@ -97,7 +98,7 @@ function SignUp() {
             </div>
             <Button
               type="submit"
-              className="w-full py-2 mb-4 bg-primaryBlue text-secondaryWhite font-poppins transition-colors rounded-full hover:bg-accentBlue"
+              className="w-full py-2 mb-4 bg-primaryBlue text-white font-poppins transition-colors rounded-full hover:bg-accentBlue"
             >
               Sign up
             </Button>

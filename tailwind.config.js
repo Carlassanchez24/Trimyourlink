@@ -17,12 +17,13 @@ export default {
     },
     extend: {
       colors: {
-        primaryBlue: '#3872B1',    // Azul primario
-        secondaryBlue: '#416286',  // Azul secundario
-        accentBlue: '#207ADB',     // Azul de acento
-        darkGrayBlue: '#3C4B5C',   // Gris azulado oscuro
-        darkGray: '#2A2E33',       // Gris oscuro
-        neutralWhite: '#EDE9FE',   // Blanco lila (previamente definido)
+        customgray: '#F5F5F7',
+        primaryBlue: '#3872B1',    
+        secondaryBlue: '#416286', 
+        accentBlue: '#207ADB',    
+        darkGrayBlue: '#3C4B5C',   
+        darkGray: '#2A2E33',       
+        neutralWhite: '#EDE9FE',   
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
