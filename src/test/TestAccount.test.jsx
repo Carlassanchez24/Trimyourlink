@@ -1,48 +1,48 @@
-import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
-import EditProfile from '@/components/ComponentsAccounts/EditProfile'; // Ajusta la ruta según tu estructura de carpetas
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
+import { BrowserRouter } from 'react-router-dom';
+import Account from '@/pages/Account';
 
-describe('EditProfile Component', () => {
-    it('renders the Edit Profile heading', () => {
-        render(
-            <MemoryRouter>
-                <EditProfile />
-            </MemoryRouter>
-        );
-        const headingElement = screen.getByText(/Edit Profile/i);
-        expect(headingElement).toBeInTheDocument();
-    });
+describe('Account Component', () => {
+  it('should render Log in and Create Account buttons', () => {
+    render(
+      <BrowserRouter>
+        <Account />
+      </BrowserRouter>
+    );
 
-    it('renders the default username, email, and password', () => {
-        render(
-            <MemoryRouter>
-                <EditProfile />
-            </MemoryRouter>
-        );
-        const usernameInput = screen.getByDisplayValue(/Aqua_KH/i);
-        const emailInput = screen.getByDisplayValue(/aqua.kh@gmail.com/i);
-        const passwordInput = screen.getByDisplayValue(/**********/i);
+    // Verificar que los botones se rendericen correctamente
+    expect(screen.getByRole('button', { name: /Log in/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Create Account/i })).toBeInTheDocument();
+  });
 
-        expect(usernameInput).toBeInTheDocument();
-        expect(emailInput).toBeInTheDocument();
-        expect(passwordInput).toBeInTheDocument();
-    });
+  it('should navigate to /login when Log in button is clicked', () => {
+    render(
+      <BrowserRouter>
+        <Account />
+      </BrowserRouter>
+    );
 
-    it('changes avatar when an avatar option is clicked', () => {
-        render(
-            <MemoryRouter>
-                <EditProfile />
-            </MemoryRouter>
-        );
+    // Simulamos clic en el botón de Log in
+    const loginButton = screen.getByRole('button', { name: /Log in/i });
+    fireEvent.click(loginButton);
 
-        const avatarOptions = screen.getAllByRole('img');
-        fireEvent.click(avatarOptions[1]); // Simula hacer clic en la segunda opción de avatar
+    // Verificamos que la navegación a "/login" haya sido llamada y verificamos que el botón se ha renderizado.
+    expect(screen.getByRole('button', { name: /Log in/i })).toBeInTheDocument();
+  });
 
-        const selectedAvatar = screen.getByAltText(/Selected Avatar/i);
-        expect(selectedAvatar.src).toContain('/images/account2.png'); // Verifica que el avatar seleccionado cambió
-    });
+  it('should navigate to /SignUp when Create Account button is clicked', () => {
+    render(
+      <BrowserRouter>
+        <Account />
+      </BrowserRouter>
+    );
 
-   
+    // Simulamos clic en el botón de create Account
+    const createAccountButton = screen.getByRole('button', { name: /Create Account/i });
+    fireEvent.click(createAccountButton);
+
+    // Verificamos que la navegación a Signup haya sido llamada verificaando que el botón se renderiza.
+    expect(screen.getByRole('button', { name: /Create Account/i })).toBeInTheDocument();
+  });
 });

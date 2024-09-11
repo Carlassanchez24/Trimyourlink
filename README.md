@@ -167,10 +167,6 @@ Naming of directories and files following the scheme below:
     
 
 
-## Screenshots 📸
-
-
-
 
 
 
