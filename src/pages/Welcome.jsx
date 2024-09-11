@@ -8,39 +8,59 @@ const Page1 = () => {
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState('');
   const [userUrls, setUserUrls] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [authToken, setAuthToken] = useState(localStorage.getItem('authToken') || '');
+
+  useEffect(() => {
+    if (authToken) {
+      fetchUserUrls();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authToken]);
 
   const handleShorten = async () => {
     if (!url) {
       setError('Please enter a valid URL');
       return;
     }
-
+  
+    // Obtener el token de autenticación del localStorage
+    const accessToken = localStorage.getItem('accessToken');
+  
+    if (!accessToken) {
+      setError('You must be logged in to shorten a URL.');
+      return;
+    }
+  
     try {
       const response = await fetch('http://localhost:8000/api/shorten/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': authToken ? `Bearer ${authToken}` : undefined,
+          'Authorization': `Bearer ${accessToken}`,  
         },
-        body: JSON.stringify({ url }),
+        body: JSON.stringify({ url }),  
       });
-
+  
       if (!response.ok) {
-        throw new Error('Failed to shorten URL');
+        const errorData = await response.json();
+        console.log('Error response from server:', errorData);
+        throw new Error(errorData.detail || 'Failed to shorten URL');
       }
-
+  
       const data = await response.json();
-      setShortenedUrl(data.shortened_url);
+      console.log('URL shortened successfully:', data);
+      setShortenedUrl(data.shortened_url);  
       setError('');
     } catch (error) {
-      setError('An error occurred while shortening the URL');
-      console.error(error);
+      console.error('Error during URL shortening:', error);
+      setError('An error occurred while shortening the URL.');
     }
   };
+  
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(shortenedUrl)
+  const copyToClipboard = (urlToCopy) => {
+    navigator.clipboard.writeText(urlToCopy)
       .then(() => {
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
@@ -62,20 +82,17 @@ const Page1 = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to fetch user URLs');
+        const errorData = await response.json();
+        throw new Error(errorData.detail || 'Failed to fetch user URLs');
       }
 
       const data = await response.json();
       setUserUrls(data);
     } catch (error) {
       console.error('Error fetching user URLs:', error);
+      setError(`Failed to fetch user URLs: ${error.message}`);
     }
   };
-
-  useEffect(() => {
-    fetchUserUrls();
-  }, [authToken]);
-
   return (
     <div className="flex min-h-screen relative flex-col items-center p-4 bg-customgray">
       <div className="relative flex flex-col items-center mt-20 mb-5 pt-10">
@@ -87,6 +104,7 @@ const Page1 = () => {
           make your life easy
         </p>
       </div>
+
       <div className="flex flex-col items-center w-full max-w-md">
         <input
           type="text"
@@ -101,7 +119,9 @@ const Page1 = () => {
         >
           Shorten URL
         </Button>
+
         {error && <p className="text-red-500">{error}</p>}
+
         {shortenedUrl && (
           <div className="w-full mt-4 p-3 text-white bg-secondaryBlue rounded-md shadow-md flex items-center justify-between">
             <div>
@@ -125,6 +145,7 @@ const Page1 = () => {
             </button>
           </div>
         )}
+
         {/* Mostrar URLs del usuario si están disponibles */}
         {userUrls.length > 0 && (
           <div className="mt-6 w-full max-w-md">
