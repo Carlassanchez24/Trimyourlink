@@ -1,3 +1,4 @@
+// UserURLs.jsx
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
@@ -11,18 +12,18 @@ function UserURLs() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
 
-  const accessToken = localStorage.getItem('accessToken');
-
   useEffect(() => {
     const fetchUrls = async () => {
       setLoading(true);
       try {
+        const accessToken = localStorage.getItem('accessToken');  // Obtén el token aquí
+
         if (!accessToken) {
           setError("No access token found. Please log in.");
           return;
         }
 
-        const response = await getUserUrls(accessToken);
+        const response = await getUserUrls(accessToken);  // Pasa el token aquí
         setUrls(response);
       } catch (error) {
         setError("Failed to fetch URLs. Please try again.");
@@ -32,10 +33,12 @@ function UserURLs() {
     };
 
     fetchUrls();
-  }, [accessToken]);
+  }, []);
 
   const handleDelete = async (id) => {
     try {
+      const accessToken = localStorage.getItem('accessToken');  // Obtén el token aquí
+
       if (!accessToken) {
         setError("No access token found. Please log in.");
         return;

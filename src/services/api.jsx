@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const USER_API_URL = 'http://127.0.0.1:8000/api/users';
-const URL_API_URL = 'http://127.0.0.1:8000/api/my-urls';
+const URL_API_URL = 'http://127.0.0.1:8000/api/all-urls';
 
 
 const userApiClient = axios.create({
@@ -41,18 +41,27 @@ export const registerUser = async (username, email, password) => {
     }
 };
 
-export const getUserUrls = async () => {
+export const getUserUrls = async (accessToken) => {
     try {
-        const response = await urlApiClient.get('/', {
-            credentials: 'include', 
-        });
-        return response.data;
+      const response = await fetch('http://localhost:8000/api/all-urls/', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to fetch user URLs');
+      }
+  
+      const data = await response.json();
+      return data;
     } catch (error) {
-        console.error("Error fetching user URLs:", error.response?.data || error.message);
-        throw new Error(error.response?.data?.error || 'Failed to fetch URLs');
+      console.error('Error fetching user URLs:', error);
+      throw error;
     }
-};
-
+  };
 export const deleteUserUrl = async (id) => {
     try {
         const response = await urlApiClient.delete(`/${id}/`, {
