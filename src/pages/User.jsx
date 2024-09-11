@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
-import { getUserUrls, deleteUserUrl } from "@/services/api";
+import { getUserUrls } from "@/services/api";
 import { useNavigate } from 'react-router-dom';
 import Button from "@/components/ui/Button";
 
@@ -11,18 +11,18 @@ function UserURLs() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
 
-  const accessToken = localStorage.getItem('accessToken');
-
   useEffect(() => {
     const fetchUrls = async () => {
       setLoading(true);
       try {
+        const accessToken = localStorage.getItem('accessToken');  
+
         if (!accessToken) {
-          setError("No access token found. Please log in.");
+          setError("No acces. Please log in.");
           return;
         }
 
-        const response = await getUserUrls(accessToken);
+        const response = await getUserUrls(accessToken);  
         setUrls(response);
       } catch (error) {
         setError("Failed to fetch URLs. Please try again.");
@@ -32,17 +32,31 @@ function UserURLs() {
     };
 
     fetchUrls();
-  }, [accessToken]);
+  }, []);
 
   const handleDelete = async (id) => {
     try {
+      const accessToken = localStorage.getItem('accessToken');
       if (!accessToken) {
         setError("No access token found. Please log in.");
         return;
       }
-
-      await deleteUserUrl(id, accessToken);
-      setUrls(urls.filter(url => url.id !== id)); 
+  
+      const response = await fetch(`http://localhost:8000/api/urls/${id}/delete/`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (response.ok) {
+        // Actualiza el estado para eliminar la URL de la lista
+        setUrls(urls.filter(url => url.id !== id));
+      } else {
+        const errorData = await response.json();
+        setError(`Failed to delete URL: ${errorData.detail}`);
+      }
     } catch (error) {
       setError("Failed to delete URL. Please try again.");
     }
@@ -109,6 +123,13 @@ function UserURLs() {
           onClick={() => navigate("/")}
         >
           Back to URL Shortener
+        </Button>
+        <Button
+          type="button"
+          className="w-full py-2 mb-4 bg-primaryBlue text-white font-poppins transition-colors rounded-full hover:bg-accentBlue"
+          onClick={() => navigate("/login")}
+        >
+          Go to Log in
         </Button>
       </div>
     </div>
