@@ -47,7 +47,7 @@ const Page1 = () => {
 
       const data = await response.json();
       console.log('URL shortened successfully:', data);
-      setShortenedUrl(data.shortened_url); 
+      setShortenedUrl(data.shortened_url);  // Aquí guardamos la URL correctamente
       setError('');
     } catch (error) {
       console.error('Error during URL shortening:', error);
@@ -135,7 +135,7 @@ const Page1 = () => {
               </a>
             </div>
             <button
-              onClick={copyToClipboard}  
+              onClick={copyToClipboard}  // Elimina el paso del argumento, ya que se usa shortenedUrl directamente
               className="ml-4 p-2 bg-darkGray text-secondaryWhite rounded-md shadow-md hover:bg-darkGrayBlue transition-colors"
               aria-label="Copy URL to clipboard"
             >
@@ -145,6 +145,7 @@ const Page1 = () => {
           </div>
         )}
 
+        {/* Mostrar URLs del usuario si están disponibles */}
         {userUrls.length > 0 && (
           <div className="mt-6 w-full max-w-md">
             <h2 className="text-2xl font-bold text-primaryBlue mb-4">Your URLs</h2>
