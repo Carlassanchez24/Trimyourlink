@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { Scissors, User } from 'feather-icons-react';
+import { Scissors, User, Link } from 'feather-icons-react';
 
 const Navbar = () => {
     return (
@@ -17,13 +17,24 @@ const Navbar = () => {
                 </li>
                 <li className="flex flex-col items-center group">
                     <NavLink 
-                        to="/Account" 
+                        to="/account" 
                         className={({ isActive }) => 
                             `flex flex-col items-center ${isActive ? 'text-primaryLila' : 'text-accentLila'} transition-colors duration-300`}
                         aria-label="Account"
                     >
                         <User className="w-6 h-6 transition-colors duration-300 text-accentLila group-hover:text-primaryLila" />
                         <span className="text-sm transition-colors duration-300 text-accentLila group-hover:text-primaryLila font-poppins">Account</span>
+                    </NavLink>
+                </li>
+                <li className="flex flex-col items-center group">
+                    <NavLink 
+                        to='/user/urls'
+                        className={({ isActive }) => 
+                            `flex flex-col items-center ${isActive ? 'text-primaryLila' : 'text-accentLila'} transition-colors duration-300`}
+                        aria-label="Account"
+                    >
+                        <Link className="w-6 h-6 transition-colors duration-300 text-accentLila group-hover:text-primaryLila" />
+                        <span className="text-sm transition-colors duration-300 text-accentLila group-hover:text-primaryLila font-poppins">My URLS</span>
                     </NavLink>
                 </li>
             </ul>

@@ -3,11 +3,11 @@ import Layout1 from '@/layout/Layout1';
 import Welcome from '@/pages/Welcome';
 import Login from '@/pages/Login';
 import SignUp from '@/pages/SignUp';
-import TravelFilter from '@/pages/TravelFilter';
 import Account from '@/pages/Account';
 import EditProfile from '@/components/ComponentsAccounts/EditProfile';
 import AccountStart from '@/components/ComponentsAccounts/AccountStart';
 import PrivateRoute from '@/components/PrivateRoute';
+import UserURLs from '@/pages/User';
 
 const router = createBrowserRouter([
     {
@@ -32,15 +32,13 @@ const router = createBrowserRouter([
             },
             {
                 path: 'account',
-                element: (
-                    <PrivateRoute>
-                        <Account />
-                    </PrivateRoute>
-                ),
+                element: <Account />,
             },
             {
-                path: 'travelfilter',
-                element: <TravelFilter />,
+                path: 'user/urls',
+                element: (                    
+                        <UserURLs />
+                ),
             },
             {
                 path: 'editProfile',
@@ -57,10 +55,6 @@ const router = createBrowserRouter([
                         <AccountStart />
                     </PrivateRoute>
                 ),
-            },
-            {
-                path: '*',
-                element: <Welcome />,  // Si alguien intenta acceder a una ruta inexistente, lo redirige a Home
             },
         ],
     },
