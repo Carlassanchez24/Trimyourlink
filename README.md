@@ -33,7 +33,7 @@ This project implements a URL shortener service with user authentication and man
 
 1. **Fork our frontend repository**
 
-   Open the repository [TravelBuddy](https://github.com/Carlassanchez24/TravelBuddy) and click the "Fork" button located in the upper right corner of the page. It creates a copy of our repository in your own Github account.
+   Open the repository [TrunYourLink](https://github.com/Carlassanchez24/Trimyourlink.git) and click the "Fork" button located in the upper right corner of the page. It creates a copy of our repository in your own Github account.
 
 
 2. **Clone your forked repository**
@@ -57,7 +57,7 @@ git clone https://github.com/your-github-profile/your-project-name.git
   npm run dev
 ```
 
-4. Go to our backend repository [TravelBuddyBack](https://github.com/jess-ar/TravelBuddyBack) and follow its README's instructions:
+4. Go to our backend repository [TrumYourLink](https://github.com/Carlassanchez24/Trimyourlink.git) and follow its README's instructions:
 <br>
 
 ## Use ⌨️
@@ -110,7 +110,6 @@ In order to visualize the project:
 - **src/:** Contains the source files of the application.
   - **_components/:_** Contains React's reusable components.
     -  **_ui/:_** Contains the components imported from the shadcn library.  
-  - **_config/:_** Contains the urls.js file, which helps us streamline the API call.
   - **layout:** Folder containing the paths to the application's dynamic pages.
   - **_pages:_** Contains all the pages that make up the different views of the app.
   - **_router:_** Contains the file index.jsx with the application's routing logic.
@@ -167,7 +166,7 @@ Naming of directories and files following the scheme below:
     
 
 
-## Screenshots 📸
+
 
 
 
